@@ -1,17 +1,20 @@
-# Use official Python 3.11 slim image as base
+# Use official Python 3.11 slim image
 FROM python:3.11-slim
 
-# Install FFmpeg and other dependencies
+# Install ffmpeg and other dependencies
 RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
 
-# Set working directory inside container
+# Set working directory
 WORKDIR /app
 
-# Copy your bot code and requirements.txt into the container
+# Copy all files to the container
 COPY . .
 
-# Install Python dependencies
+# Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Run your bot
+# Expose port 8080 (for optional web server)
+EXPOSE 8080
+
+# Run the bot
 CMD ["python3", "main.py"]
